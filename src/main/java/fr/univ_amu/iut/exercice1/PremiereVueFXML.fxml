@@ -11,6 +11,7 @@
   La racine est déjà placée (un BorderPane) ainsi que les imports nécessaires.
   À vous d'ajouter l'intérieur :
     - <padding>     : 20 px de marge intérieure (utiliser <Insets .../>)
+    
     - <top>         : un Label "Bienvenue dans le monde FXML !" stylé en gras 20px,
                       aligné au centre via BorderPane.alignment="CENTER".
     - <center>      : un Label explicatif (texte libre), wrapText="true", aligné
@@ -24,7 +25,20 @@
   attributs précis de chaque composant.
 -->
 
-<BorderPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
-            prefWidth="420.0" prefHeight="240.0">
 
+<BorderPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+  prefWidth="420.0" prefHeight="240.0">
+<padding>
+  <Insets top="20" />
+</padding>
+<top>
+  <Label text="Bienvenue dans le monde FXML !" style="-fx-font-weight: bold; -fx-font-size: 20px;" 
+    BorderPane.alignment="CENTER" />
+</top>
+<center>
+  <Label text="" wrapText="true" BorderPane.alignment="CENTER" />
+</center>
+<bottom>
+  <Button text="D'accord, c'est magique" BorderPane.alignment="CENTER" />
+</bottom>
 </BorderPane>
