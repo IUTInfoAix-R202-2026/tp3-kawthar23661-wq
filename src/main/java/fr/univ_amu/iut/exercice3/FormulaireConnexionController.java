@@ -69,6 +69,32 @@ public class FormulaireConnexionController {
     //      - computeValue() : retourne true si le mot de passe est trop court (< 8)
     //        OU ne contient pas de majuscule OU ne contient pas de chiffre.
     //    Puis : boutonOk.disableProperty().bind(motDePasseInvalide);
+    champMotDePasse
+        .editableProperty()
+        .bind(Bindings.greaterThanOrEqual(champIdentifiant.textProperty().length(), 6));
+    boutonAnnuler
+        .disableProperty()
+        .bind(
+            Bindings.and(
+                Bindings.equal(0, champIdentifiant.textProperty().length()),
+                Bindings.equal(0, champMotDePasse.textProperty().length())));
+    BooleanBinding motDePasseInvalide =
+        new BooleanBinding() {
+          {
+            super.bind(champMotDePasse.textProperty());
+          }
+
+          @Override
+          protected boolean computeValue() {
+            // TODO Auto-generated method stub
+            String motDePasse = champMotDePasse.getText();
+            boolean tropCourt = motDePasse.length() < 8;
+            boolean PasMajuscule = !motDePasse.matches(".*[A-Z].*");
+            boolean PasDeChiffre = !motDePasse.matches(".*[0-9].*");
+            return tropCourt || PasDeChiffre || PasMajuscule;
+          }
+        };
+    boutonOk.disableProperty().bind(motDePasseInvalide);
   }
 
   /**
@@ -80,11 +106,16 @@ public class FormulaireConnexionController {
     // TODO exercice 3 : afficher dans labelMessage l'identifiant suivi du mot
     // de passe masqué par autant d'étoiles que de caractères saisis.
     // Exemple : "alice ********" pour identifiant "alice" et mot de passe de 8 caractères.
+    labelMessage.setText(
+        champIdentifiant.getText() + " " + "*".repeat(champMotDePasse.getText().length()));
   }
 
   /** Action du bouton Annuler. Vide les deux champs et le label de message. */
   @FXML
   private void annuler() {
     // TODO exercice 3 : vider les deux champs et le label message.
+    champIdentifiant.setText("");
+    champMotDePasse.setText("");
+    labelMessage.setText("");
   }
 }
